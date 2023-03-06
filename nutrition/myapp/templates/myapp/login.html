@@ -1,0 +1,40 @@
+
+{% extends 'myapp/ind2.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+  <!--Login--> 
+  <div class="container py-5">
+	<div style="width: 300px;margin:0 auto;">
+	<h1>Login</h1>
+	</div>
+	<form method="POST">
+	  {% csrf_token %}
+	  <fieldset class="form-group">
+		<!--<legend class="border-bottom mb-4">Log In</legend>-->
+		<div style="width: 300px;margin:0 auto;">
+	  	{{ login_form|crispy }}
+		</div>
+	</fieldset>
+	<div class="form-group" style="width: 300px;margin:0 auto;">
+	  <!-- <button class="btn btn-primary" type="submit">Login</button> -->
+      <a type="submit" class="btn btn-primary" href="/test">Login</a>
+	</div>
+	</form>
+	<div>
+        <div style="width: 300px;margin:0 auto;">
+		<small class="text-muted">
+			<br>
+        <p class="text-center">If dont  have an account click , <a href="register/">SignUp</a> instead.</p>
+        </small></div>
+        <div style="width: 280px;margin:0 auto;">
+        <small class="text-muted">
+            <a href="/">Forgot password?</a>
+        </small></div>
+    </div>
+</div>
+
+
+  
+  {% endblock %}
+
