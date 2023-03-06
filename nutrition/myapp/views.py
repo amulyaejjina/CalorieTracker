@@ -53,13 +53,13 @@ def register(request):
             form.save()
             # login(request, user)
             messages.success(request,f'account created')
-            return redirect('home')
+            return redirect('login')
         messages.error(request,f'account created')
     form = createuserForm()
         
     context ={'form':form}    
     return render(request, 'myapp/register.html',context)
-    return render (request=request, template_name="myapp/register.html", context={"register_form":form})
+    
 
 def loginpage(request):
     #context ={}
