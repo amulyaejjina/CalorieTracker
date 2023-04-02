@@ -8,8 +8,59 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script> -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>
+        body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.mobile-container {
+  max-width: 480px;
+  margin: auto;
+  background-color: #555;
+  height: 500px;
+  color: white;
+  border-radius: 10px;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+  position: relative;
+}
+
+.topnav #myLinks {
+  display: none;
+}
+
+.topnav a {
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+}
+
+.topnav a.icon {
+  background: black;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.active {
+  background-color: #04AA6D;
+  color: white;
+}
 
         .hidden {
 
@@ -83,23 +134,26 @@ margin-right: 2px;
     <body>
 
         <nav class="navbar navbar-dark bg-dark">
+          
             <a href="#" class="navbar-brand">Calorie Tracker</a>
-
+            
+            <div alitgn="left" class="topnav">
+              <a href="#home" class="active">Logo</a>
+              <div id="myLinks">
+                <a href="{% url 'bmi' %}">BMI</a>
+                <a href="#contact">Meal Plan</a>
+              </div>
+              <a href="javascript:void(0);" class="icon" onclick="hamburger_toggle()">
+                <i class="fa fa-bars"></i>
+              </a>
+            </div>
             <div class="navbar">
                 <a class="btn btn-primary" href="/logout">logout</a>
                 
                 <a class="btn btn-primary" href="contact.html">Contact Us</a>
                 
             </div>
-<!--  
-            <div class="navbar">
-                <a class="btn btn-primary" href="/login">Login</a>
-                <a class="btn btn-primary" href="/register">SignUp</a>
-                <a class="btn btn-primary" href="#">Help</a>
-                <a class="btn btn-primary" href="/contact">Contact Us</a>
-                
-            </div>
-            -->
+
         </nav>
         <style>
             .hidden {
@@ -118,6 +172,63 @@ margin-right: 2px;
               /* background-color: #b9faac; */
               position: fixed;
             }
+            li {
+              list-style: none;}
+            a{
+              color:white;
+              text-decoration: none;
+            }
+            .navbar{
+              min-height: 70px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding:0 24px;
+            }
+
+            .nav-menu{
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 60px;
+            }
+
+            .nav-branding{
+              font-size: 2rem;
+            }
+
+            .nav-link{
+              transition: 0.7s ease;
+            }
+
+            .nav-link:hover{
+              color:dodgerblue;
+            }
+
+            .hamburger{
+              display: none;
+              cursor:pointer;
+            }
+
+            .bar{
+              display: block;
+              width:25px;
+              height:3px;
+              margin:5px auto;
+              -webkit-transition: all 0.3s ease-in-out;
+              transition: all 0.3s ease-in-out;
+              background-color: white;
+            }
+
+            @media(max-width:768px){
+              .hamburger{
+                display: block;
+              }
+              .hamburger.active .bar:nth-child(2){
+                opacity:0;
+              }
+            }
+
           </style>
 
         
@@ -154,6 +265,7 @@ margin-right: 2px;
                     <th>Proteins</th>
                     <th>Fats</th>
                     <th>Calories</th>
+                    <th>Remove item</th>
                   </tr>
                   {% for c in consumed_food %}
                   <tr>
@@ -162,6 +274,7 @@ margin-right: 2px;
                     <td>{{c.food_consumed.protein}}</td>
                     <td>{{c.food_consumed.fats}}</td>
                     <td>{{c.food_consumed.calories}}</td>
+                    <td><a class="btn btn-danger" href="{% url 'delete' c.id %}">X</td>
 
                   </tr>
                   {% endfor %}
@@ -176,7 +289,17 @@ margin-right: 2px;
                 </table>
                 </div>
               </div>
-              <div class="col-md-5 offset-1"></div>
+              <div class="col-md-5 offset-1">
+                <div class="">
+                  <h4>Today's breakdown :</h4>
+                </div>
+                <div class="card-header text-white bg-primary">
+                  <h4>Macronutrients breakdown</h4>
+                </div>
+                <div class="col-md-12">
+                  <canvas id="myChart" width="400" height="400"></canvas>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -196,6 +319,14 @@ margin-right: 2px;
 
     </body>
     <script>
+      function hamburger_toggle() {
+      var x = document.getElementById("myLinks");
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+    }
         function toggleTable() {
 
         document.getElementById("myTable").style.display="none";
@@ -228,6 +359,37 @@ margin-right: 2px;
         document.getElementById("protein_total").innerHTML = proteins;
         document.getElementById("fat_total").innerHTML = fats;
         document.getElementById("calories_total").innerHTML = calories;
+
+  var total = carbs+proteins+fats;
+  var carbsP = Math.round((carbs/total)*100);
+  var proteinP = Math.round((proteins/total)*100);
+  var fatsP = Math.round((fats/total)*100);
+
+ 
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+  var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Carbs '+carbsP+'%', 'Protein '+proteinP+'%', 'Fats '+fatsP+'%'],
+      datasets: [{
+        label: '# of Votes',
+        data: [carbsP,proteinP,fatsP],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.6)',
+          'rgba(54, 162, 235, 0.6)',
+          'rgba(255, 206, 86, 0.6)',
+          
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)', 
+        ],
+        borderWidth: 1
+      }]
+    },
+  });
     </script>
 </html>
 

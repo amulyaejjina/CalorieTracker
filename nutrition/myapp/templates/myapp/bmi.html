@@ -1,0 +1,201 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+         <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .mobile-container {
+      max-width: 480px;
+      margin: auto;
+      background-color: #555;
+      height: 500px;
+      color: white;
+      border-radius: 10px;
+    }
+    .center {
+  border: 3px solid green;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  padding: 530px;
+  width: 150%;
+
+}
+    .topnav {
+      overflow: hidden;
+      background-color: #333;
+      position: relative;
+    }
+    
+    .topnav #myLinks {
+      display: none;
+    }
+    
+    .topnav a {
+      color: white;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+      display: block;
+    }
+    
+    .topnav a.icon {
+      background: black;
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    
+    .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+    
+    .active {
+      background-color: #04AA6D;
+      color: white;
+    }
+    
+            .hidden {
+    
+            display: none;
+    
+            }
+            table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid rgb(149, 154, 181);
+    }
+    table thead th { color: rgb(14, 14, 14); font-size:10pt; }
+    th {
+      background-color: #686666;
+      font-weight: bold;
+    }
+    
+    tr {
+      background-color: #f5f5f5;
+    }
+    
+    /* Optional styles to make the table larger */
+    table {
+      font-size: 14px;
+    }
+    
+    th, td {
+      padding: 12px;
+    }
+    .btn-margin-left {
+    margin-left: 2px;
+    }
+    .btn-margin-right {
+        margin-right: 2px;
+    }
+    .box {
+        width: 280px;
+        height: 30px;
+        border: 1px solid #999;
+        font-size: 18px;
+        color: #1c87c9;
+        background-color: #eee;
+        border-radius: 5px;
+        box-shadow: 4px 4px #ccc;
+    }
+    .btn-primary {
+    padding-left:30px;
+    padding-right:30px;
+    margin-left: 2px;
+    margin-right: 2px;
+    }
+    .itemconfiguration
+    {
+        height:440px;
+        width:215px;
+        /* background-color:#CCC; */		
+            overflow-y:auto;
+        float:left;
+        position:relative;
+        margin-left:-5px;
+    }
+        </style>
+    </head>
+    
+    <body>
+<nav class="navbar navbar-dark bg-dark">
+          
+    <a href="#" class="navbar-brand">Calorie Tracker</a>
+
+    <div class="navbar">
+        <a class="btn btn-primary" href="/logout">logout</a>
+        
+        <a class="btn btn-primary" href="contact.html">Contact Us</a>
+        
+    </div>
+
+</nav>
+
+<div class="center">
+    <h2>BMI CALCULATOR</h2>
+    <p> Height in meters:</p>
+    <input class="height-input-field" type="text">
+    <p>Weight in kilograms:</p>
+    <input class="weight-input-field" type="text"><br><br>
+    <button class="btn btn-success calculate"> Calculate</button><br><br>
+    <h4 class="result"></h4>
+    <p class="result-statement"></p>
+    <div style="max-width:700px; word-wrap:break-word;">Disclaimer: Please note that any BMI calculator provided on this platform is for 
+        informational purposes only and should not be used as a substitute for professional medical advice, diagnosis, or treatment. 
+        The results of the BMI calculator may not be accurate for all individuals, as it does not take into account factors such as 
+        muscle mass, bone density, and body composition.</div>
+    <br><br>
+    <p class="disclaimer"></p>
+</div>
+
+
+<script>
+    var heightInput = document.querySelector(".height-input-field");
+var weightInput = document.querySelector(".weight-input-field");
+var calculateButton = document.querySelector(".calculate");
+var result = document.querySelector(".result");
+var statement = document.querySelector(".result-statement");
+var BMI, height, weight;
+
+calculateButton.addEventListener("click", ()=>{
+    
+    height = heightInput.value;
+    weight = weightInput.value;
+    BMI = weight/(height**2); 
+    result.innerText = BMI.toFixed(2);
+
+    if(BMI < 18.5){
+        statement.innerText = "Your BMI falls within the underweight range";    
+    }else if((BMI > 18.5) && (BMI <= 24.9)){
+        statement.innerText = "Your BMI falls within the normal or healthy weight range";
+    }else if((BMI >= 25) && (BMI <= 29.9 )){
+        statement.innerText = "Your BMI falls within the overweight range";
+    }else{
+        statement.innerText = "Your BMI falls within the obese range";
+    }
+});
+</script>
+</body>
