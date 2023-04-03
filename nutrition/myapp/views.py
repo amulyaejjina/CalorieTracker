@@ -131,20 +131,21 @@ def test(request):
         food_consumed = request.POST['food_consumed']
         consume = Food.objects.get(name=food_consumed)
         
-        # get curren user object
+        # get current user object
         user = request.user
 
-        consume = Consume(user=1,food_consumed=consume)
+        consume = Consume(user=user,food_consumed=consume)
         consume.save()
         foods = Food.objects.all()
  
     else:
         foods = Food.objects.all()
+        user = request.user
     consumed_food = Consume.objects.filter(user=1)
  
     # return render(request,'myapp/index.html',{'foods':foods,'consumed_food' : consumed_food})
  
-    return render(request,"myapp/ind.html",{'foods':foods,'consumed_food' : consumed_food})
+    return render(request,"myapp/ind_backup.html",{'foods':foods,'consumed_food' : consumed_food,'username' : user})
 
 def search(request):
     pass

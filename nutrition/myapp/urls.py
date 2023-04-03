@@ -12,7 +12,7 @@ urlpatterns = [
     path('login/register/', views.register ),
     path('home/home/', views.home ),
     path('contact/', views.contact ),
-    path('test/', views.test ),
+    path('test/', views.test,name="test" ),
     path('delete/<int:id>/', views.delete_consume,name="delete" ),
     path('bmi/', views.check_bmi,name="bmi" ),
     
