@@ -162,7 +162,7 @@ margin-right: 2px;
                 </center>
             </div>
         {% if user.is_authenticated %}
-         <div class="container">
+         <!-- <div class="container">
             <div class="row">
                 <div class="col-md-12">
                   <form method="POST">
@@ -219,12 +219,12 @@ margin-right: 2px;
               </div>
               <div class="col-md-5 offset-1"></div>
             </div>
-          </div>
+          </div> -->
         {% endif %}
 
-        {% block content %}
+        <!-- {% block content %}
 
-        {% endblock %} 
+        {% endblock %}  -->
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
         <footer class="bg-dark text-center text-white">
@@ -254,22 +254,22 @@ margin-right: 2px;
         var table = document.getElementById("table");
         var carbs=0,proteins=0,fats=0,calories=0;
   
-        for(var i=1;i<table.rows.length-1;i++){
-          console.log(table.rows[i].cells[1].innerHTML);
-          carbs += parseFloat(table.rows[i].cells[1].innerHTML);
-          carbs = Math.round(carbs);
-          proteins += parseFloat(table.rows[i].cells[2].innerHTML);
-          proteins = Math.round(proteins);
-          fats += parseFloat(table.rows[i].cells[3].innerHTML);
-          fats = Math.round(fats);
-          calories += parseFloat(table.rows[i].cells[4].innerHTML);
-          calories = Math.round(calories);
-        }
-        console.log(carbs);
-        document.getElementById("carbs_total").innerHTML = carbs;
-        document.getElementById("protein_total").innerHTML = proteins;
-        document.getElementById("fat_total").innerHTML = fats;
-        document.getElementById("calories_total").innerHTML = calories;
+        // for(var i=1;i<table.rows.length-1;i++){
+        //   console.log(table.rows[i].cells[1].innerHTML);
+        //   carbs += parseFloat(table.rows[i].cells[1].innerHTML);
+        //   carbs = Math.round(carbs);
+        //   proteins += parseFloat(table.rows[i].cells[2].innerHTML);
+        //   proteins = Math.round(proteins);
+        //   fats += parseFloat(table.rows[i].cells[3].innerHTML);
+        //   fats = Math.round(fats);
+        //   calories += parseFloat(table.rows[i].cells[4].innerHTML);
+        //   calories = Math.round(calories);
+        // }
+        // console.log(carbs);
+        // document.getElementById("carbs_total").innerHTML = carbs;
+        // document.getElementById("protein_total").innerHTML = proteins;
+        // document.getElementById("fat_total").innerHTML = fats;
+        // document.getElementById("calories_total").innerHTML = calories;
     </script>
 </html>
 

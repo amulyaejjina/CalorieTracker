@@ -17,8 +17,8 @@
 		</div>
 	</fieldset>
 	<div class="form-group" style="width: 300px;margin:0 auto;">
-	  <!-- <button class="btn btn-primary" type="submit">Login</button> -->
-      <a type="submit" class="btn btn-primary" href="/test">Login</a>
+	  <button id="myButton2" class="btn btn-primary" type="submit">Login</button>
+      <!-- <a type="submit" class="btn btn-primary" href="/test">Login</a> -->
 	</div>
 	</form>
 	<div>
@@ -33,7 +33,11 @@
         </small></div>
     </div>
 </div>
-
+<script>
+	document.getElementById("myButton2").addEventListener("click", function() {
+  window.location.href = "test/";
+});
+</script>
 
   
   {% endblock %}

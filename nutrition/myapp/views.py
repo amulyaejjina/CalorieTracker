@@ -10,10 +10,23 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Food,Consume
 from django.db import connection
+from django.contrib.auth.models import User
+# import factory
+# from factory.django import DjangoModelFactory
+
+# class UserFactory(DjangoModelFactory):
+
+#     username = factory.Sequence('testuser{}'.format)
+#     email = factory.Sequence('testuser{}@company.com'.format)
+
+#     class Meta:
+#         model = User
 
 def home(request):
     connect = connection.cursor()
-    if request.method =="GET":
+    if request.user.is_authenticated:
+        return redirect('/test/')
+    elif request.method =="GET":
         with connection.cursor() as cursor:
             food_searched = request.GET.get('food_searched')
             food_searched = 'Oatmeal'
@@ -26,7 +39,7 @@ def home(request):
             data = cursor.fetchall()
         return render(request, 'myapp/home.html', {'columns': columns, 'data': data})
  
-    if request.method =="POST":
+    elif request.method =="POST":
         food_consumed = request.POST['food_consumed']
         consume = Food.objects.get(name=food_consumed)
         # get curren user object
@@ -53,7 +66,7 @@ def register(request):
             form.save()
             # login(request, user)
             messages.success(request,f'account created')
-            return redirect('home')
+            return redirect('/login')
         messages.error(request,f'account created')
     form = createuserForm()
         
@@ -62,10 +75,10 @@ def register(request):
     return render (request=request, template_name="myapp/register.html", context={"register_form":form})
 
 def loginpage(request):
-    #context ={}
+    context ={}
     if request.user.is_authenticated:
-        return redirect('/')
-    if request.method == "POST":
+        return redirect('/test/')
+    elif request.method == "POST":
          form = AuthenticationForm(request, data=request.POST)
          if form.is_valid():
             username = form.cleaned_data.get('username')
@@ -73,14 +86,16 @@ def loginpage(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                # request.session['user'] = user
                 messages.info(request, f"Hello <b>{user.username}</b>!You are now logged in as {username}.")
 
             else:
                 messages.error(request,"Invalid username or password.")
          else:
              messages.error(request,"Invalid username or password.")
+         return redirect('/test/')
     form = AuthenticationForm()
-    #context ={'form':form} 
+    context ={'form':form} 
     return render(request=request, template_name="myapp/login.html", context={"login_form":form})
     #return render(request, 'myapp/login.html',context)
     
@@ -130,22 +145,24 @@ def test(request):
     if request.method =="POST":
         food_consumed = request.POST['food_consumed']
         consume = Food.objects.get(name=food_consumed)
-        
+        if not request.user.is_authenticated:
+            request.user.id = 1
         # get current user object
         user = request.user
-
+        
         consume = Consume(user=user,food_consumed=consume)
         consume.save()
         foods = Food.objects.all()
  
     else:
         foods = Food.objects.all()
-        user = request.user
-    consumed_food = Consume.objects.filter(user=1)
+        # user = request.user
+    user = request.user
+    consumed_food = Consume.objects.filter(user=request.user.id)
  
     # return render(request,'myapp/index.html',{'foods':foods,'consumed_food' : consumed_food})
  
-    return render(request,"myapp/ind_backup.html",{'foods':foods,'consumed_food' : consumed_food,'username' : user})
+    return render(request,"myapp/ind_backup.html",{'foods':foods,'consumed_food' : consumed_food,'username' : user.username})
 
 def search(request):
     pass
