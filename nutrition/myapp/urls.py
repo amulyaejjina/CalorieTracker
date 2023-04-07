@@ -7,7 +7,7 @@ urlpatterns = [
     path('logout/', views.logout_page, name='logout_page'),
     #path('register/', views.register,name='register'),
     #path('login/login/', views.loginpage )
-    #path('logout', views.logout, name='logout')
+    #path('logout', views.logout, name='logout')jyggjl
     path('register/', views.register ),
     path('login/register/', views.register ),
     path('home/home/', views.home ),
