@@ -95,7 +95,7 @@ def loginpage(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             if (len(username) == 0) or (len(password) == 0):
-                 return redirect('/login/')
+                return redirect('/login/')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -105,8 +105,9 @@ def loginpage(request):
             else:
                 messages.error(request,"Invalid username or password.")
          else:
-             messages.error(request,"Invalid username or password.")
-             return redirect('/test/')
+            print("Coming in else")
+            messages.error(request,"Invalid username or password.")
+            return redirect('/login/')
     form = AuthenticationForm()
     context ={'form':form} 
     return render(request=request, template_name="myapp/login.html", context={"login_form":form})
