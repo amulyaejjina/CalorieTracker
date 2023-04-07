@@ -1,0 +1,20 @@
+<nav class="navbar navbar-dark bg-dark">
+    <a href="#" class="navbar-brand">Calorie Tracker</a>
+    {% if user.is_authenticated %}
+    <div class="navbar">
+        <a class="btn btn-primary" href="/logout">logout</a>
+        
+        <a class="btn btn-primary" href="contact.html">Contact Us</a>
+        
+    </div>
+    {% else %}
+    <div class="navbar">
+        <a class="btn btn-primary" href="/login">Login</a>
+        <a class="btn btn-primary" href="/register">SignUp</a>
+        <a class="btn btn-primary" href="#">Help</a>
+        <a class="btn btn-primary" href="/contact">Contact Us</a>
+        
+    </div>
+    {% endif %}
+</nav>
+<div style="width: 300px;margin:0 auto;">{% include 'myapp/messages.html' %}</div>
