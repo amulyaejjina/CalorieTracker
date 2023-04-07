@@ -11,6 +11,17 @@ from django.shortcuts import render, redirect
 from .models import Food,Consume
 from django.db import connection
 from django.contrib.auth.models import User
+from django import forms
+from .forms import ContactForm
+from django.core.mail import send_mail, BadHeaderError
+
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
+from django.template.loader import render_to_string
+from django.db.models.query_utils import Q
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
 # import factory
 # from factory.django import DjangoModelFactory
 
@@ -87,13 +98,14 @@ def loginpage(request):
             if user is not None:
                 login(request, user)
                 # request.session['user'] = user
+                return redirect('/test/')
                 messages.info(request, f"Hello <b>{user.username}</b>!You are now logged in as {username}.")
 
             else:
                 messages.error(request,"Invalid username or password.")
          else:
              messages.error(request,"Invalid username or password.")
-         return redirect('/test/')
+         
     form = AuthenticationForm()
     context ={'form':form} 
     return render(request=request, template_name="myapp/login.html", context={"login_form":form})
@@ -175,4 +187,53 @@ def search(request):
     #         columns = [col[0] for col in cursor.description]
     #         data = cursor.fetchall()
     #     return render(request, 'myapp/index.html', {'columns': columns, 'data': data})
- 
+def password_reset_request(request):
+	if request.method == "POST":
+		password_reset_form = PasswordResetForm(request.POST)
+		if password_reset_form.is_valid():
+			data = password_reset_form.cleaned_data['email']
+			associated_users = User.objects.filter(Q(email=data))
+			if associated_users.exists():
+				for user in associated_users:
+					subject = "Password Reset Requested"
+					email_template_name = "main/password/password_reset_email.txt"
+					c = {
+					"email":user.email,
+					'domain':'127.0.0.1:8000',
+					'site_name': 'Website',
+					"uid": urlsafe_base64_encode(force_bytes(user.pk)),
+					'token': default_token_generator.make_token(user),
+					'protocol': 'http',
+					}
+					email = render_to_string(email_template_name, c)
+					try:
+						send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
+					except BadHeaderError:
+
+						return HttpResponse('Invalid header found.')
+						
+					messages.success(request, 'A message with reset password instructions has been sent to your inbox.')
+					return redirect ("/")
+	password_reset_form = PasswordResetForm()
+	return render(request=request, template_name="main/password/password_reset.html", context={"password_reset_form":password_reset_form})
+def contact(request):
+	if request.method == 'POST':
+		form = ContactForm(request.POST)
+		if form.is_valid():
+			subject = "Website Inquiry" 
+			body = {
+			'first_name': form.cleaned_data['first_name'], 
+			'last_name': form.cleaned_data['last_name'], 
+			'email': form.cleaned_data['email_address'], 
+			'message':form.cleaned_data['message'], 
+			}
+			message = "\n".join(body.values())
+
+			try:
+				send_mail(subject, message, 'admin@example.com', ['admin@example.com']) 
+			except BadHeaderError:
+				return HttpResponse('Invalid header found.')
+			return redirect('/contact')
+      
+	form = ContactForm()
+	return render(request, "myapp/contact.html", {'form':form})
