@@ -40,14 +40,21 @@ def home(request):
     elif request.method =="GET":
         with connection.cursor() as cursor:
             food_searched = request.GET.get('food_searched')
-            food_searched = 'Oatmeal'
+            
+            if food_searched is None:
+                food_searched = ''
+            else:
+                food_searched = food_searched.lower()
+            # food_searched = 'Oatmeal'
             # food_consumed = request.GET['food_consumed']
             print("-----------")
             print(food_searched)
-            query = "SELECT name,carbs,protein,fats,calories FROM myapp_food WHERE name="+"'"+food_searched+"'"
+            query = "SELECT name,carbs,protein,fats,calories FROM myapp_food WHERE LOWER(name)="+"'"+food_searched+"'"
             cursor.execute(query)
             columns = [col[0] for col in cursor.description]
+            print(columns)
             data = cursor.fetchall()
+            print(data)
         return render(request, 'myapp/home.html', {'columns': columns, 'data': data})
  
     elif request.method =="POST":
