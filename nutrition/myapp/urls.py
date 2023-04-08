@@ -2,7 +2,8 @@ from django.urls import path,include
 from . import views
 from django.contrib.auth import views as auth_views
 urlpatterns = [
-    #path('', views.home)
+    path('home/', views.home),
+    path('logout/home/', views.home),
     path('/', views.home),
     path('login/', views.loginpage, name='login'),
     path('login/login/', views.loginpage, name='login'),
@@ -13,7 +14,7 @@ urlpatterns = [
     path('home/home/', views.home ),
     #path('contact/', views.contact ),
     path("contact/", views.contact, name="contact"),
-    path('test/contact/', views.contact, name="contact"),    
+    path('test/contact.html/', views.contact, name="contact"),    
     path('test/', views.test,name="test" ),
     path('login/test/', views.test,name="test" ),
     path('delete/<int:id>/', views.delete_consume,name="delete"),

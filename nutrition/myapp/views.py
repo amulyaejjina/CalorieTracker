@@ -76,9 +76,10 @@ def register(request):
         if form.is_valid():
             form.save()
             # login(request, user)
-            messages.success(request,f'account created')
+            messages.success(request,f'"User Accout created"')
             return redirect('/login')
-        messages.error(request,f'not created')
+        for error in list(form.errors.values()):
+             messages.error(request, error)
     form = createuserForm()
         
     context ={'form':form}    
@@ -102,10 +103,12 @@ def loginpage(request):
                 # request.session['user'] = user
                 return redirect('/test/')
             else:
-                messages.error(request,"Invalid username or password.")
+                for error in list(form.errors.values()):
+                     messages.error(request, error)
          else:
             print("Coming in else")
-            messages.error(request,"Invalid username or password.")
+            for error in list(form.errors.values()):
+                     messages.error(request, error)
             return redirect('/login/')
     form = AuthenticationForm()
     context ={'form':form} 
@@ -114,7 +117,7 @@ def loginpage(request):
     
 def logout_page(request):
     logout(request)
-    messages.info(request, "Logged out successfully!")
+    messages.success(request, "Logged out successfully!")
     return render(request,"myapp/home.html")
 
 # Create your views here.
@@ -224,7 +227,8 @@ def contact(request):
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
 		if form.is_valid():
-			subject = "Website Inquiry" 
+			subject = "Website Inquiry"
+            # 'subject' : form.cleaned_data["subject"] 
 			body = {
 			'first_name': form.cleaned_data['first_name'], 
 			'last_name': form.cleaned_data['last_name'], 
@@ -235,6 +239,7 @@ def contact(request):
 
 			try:
 				send_mail(subject, message, 'admin@example.com', ['admin@example.com']) 
+                                
 			except BadHeaderError:
 				return HttpResponse('Invalid header found.')
                      
