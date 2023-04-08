@@ -78,7 +78,7 @@ def register(request):
             # login(request, user)
             messages.success(request,f'account created')
             return redirect('/login')
-        messages.error(request,f'account created')
+        messages.error(request,f'not created')
     form = createuserForm()
         
     context ={'form':form}    
@@ -100,7 +100,6 @@ def loginpage(request):
             if user is not None:
                 login(request, user)
                 # request.session['user'] = user
-                messages.info(request, f"Hello <b>{user.username}</b>!You are now logged in as {username}.")
                 return redirect('/test/')
             else:
                 messages.error(request,"Invalid username or password.")
@@ -198,7 +197,7 @@ def password_reset_request(request):
 			if associated_users.exists():
 				for user in associated_users:
 					subject = "Password Reset Requested"
-					email_template_name = "main/password/password_reset_email.txt"
+					email_template_name = "myapp/password_reset_email.txt"
 					c = {
 					"email":user.email,
 					'domain':'127.0.0.1:8000',
@@ -209,15 +208,18 @@ def password_reset_request(request):
 					}
 					email = render_to_string(email_template_name, c)
 					try:
-						send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
+						send_mail(subject, email, 'no-reply@Carlorietracker.com' , [user.email], fail_silently=False)
 					except BadHeaderError:
 
 						return HttpResponse('Invalid header found.')
 						
-					messages.success(request, 'A message with reset password instructions has been sent to your inbox.')
-					return redirect ("/")
+					messages.success(request, 'A message with  password reset instructions has been sent to your inbox.')
+					return redirect ("/password_reset")
 	password_reset_form = PasswordResetForm()
-	return render(request=request, template_name="main/password/password_reset.html", context={"password_reset_form":password_reset_form})
+	return render(request=request, template_name="myapp/password_reset.html", context={"password_reset_form":password_reset_form})
+
+
+
 def contact(request):
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
@@ -235,6 +237,7 @@ def contact(request):
 				send_mail(subject, message, 'admin@example.com', ['admin@example.com']) 
 			except BadHeaderError:
 				return HttpResponse('Invalid header found.')
+                     
 			return redirect('/contact')
       
 	form = ContactForm()
