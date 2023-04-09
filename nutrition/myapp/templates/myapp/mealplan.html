@@ -1,0 +1,509 @@
+
+
+{% load crispy_forms_tags %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+         <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+      
+      *{
+      list-style: none;
+      text-decoration: none;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Open Sans', sans-serif;
+      }
+      
+      body{
+      background: #f5f6fa;
+      }
+      
+      .wrapper .sidebar{
+      background: rgb(68, 71, 74);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 225px;
+      height: 100%;
+      padding: 20px 0;
+      transition: all 0.5s ease;
+      }
+      
+      .wrapper .sidebar .profile{
+      margin-bottom: 30px;
+      text-align: center;
+      }
+      
+      .wrapper .sidebar .profile img{
+      display: block;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto;
+      }
+      
+      .wrapper .sidebar .profile h3{
+      color: #ffffff;
+      margin: 10px 0 5px;
+      }
+      
+      .wrapper .sidebar .profile p{
+      color: rgb(206, 240, 253);
+      font-size: 14px;
+      }
+      
+      .wrapper .sidebar ul li a{
+      display: block;
+      padding: 13px 30px;
+      border-bottom: 1px solid #10558d;
+      color: rgb(241, 237, 237);
+      font-size: 16px;
+      position: relative;
+      }
+      
+      .wrapper .sidebar ul li a .icon{
+      color: #dee4ec;
+      width: 30px;
+      display: inline-block;
+      }
+      
+      
+      
+      .wrapper .sidebar ul li a:hover,
+      .wrapper .sidebar ul li a.active{
+      color: #0c7db1;
+      
+      background:white;
+      border-right: 2px solid rgb(83, 93, 99);
+      }
+      
+      .wrapper .sidebar ul li a:hover .icon,
+      .wrapper .sidebar ul li a.active .icon{
+      color: #0c7db1;
+      }
+      
+      .wrapper .sidebar ul li a:hover:before,
+      .wrapper .sidebar ul li a.active:before{
+      display: block;
+      }
+      
+      .wrapper .section{
+      width: calc(100% - 225px);
+      margin-left: 225px;
+      transition: all 0.5s ease;
+      }
+      
+      .wrapper .section .top_navbar{
+      background: rgb(61, 64, 66);
+      height: 70px;
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+      color: white;
+      
+      }
+      
+      .wrapper .section .top_navbar .hamburger a{
+      font-size: 28px;
+      color: #f4fbff;
+      }
+      
+      .wrapper .section .top_navbar .hamburger a:hover{
+      color: #f4f7f8;
+      }
+      
+      .wrapper .section .container{
+      margin: 30px;
+      background: #fff;
+      padding: 100px;
+      line-height: 28px;
+      align-items: center;
+      
+      }
+      
+      body.active .wrapper .sidebar{
+      left: -225px;
+      }
+      
+      body.active .wrapper .section{
+      margin-left: 0;
+      width: 100%;
+      }
+      
+          body {
+      font-family: Arial, Helvetica, sans-serif;
+      }
+      
+      .mobile-container {
+      max-width: 480px;
+      margin: auto;
+      background-color: #555;
+      height: 500px;
+      color: white;
+      border-radius: 10px;
+      }
+      
+      .topnav {
+      overflow: hidden;
+      background-color: #333;
+      position: relative;
+      }
+      
+      .topnav #myLinks {
+      display: none;
+      }
+      
+      .topnav a {
+      color: white;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+      display: block;
+      }
+      
+      .topnav a.icon {
+      background: black;
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      }
+      
+      .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+      }
+
+      .topnav-right{
+        float: right;
+      }
+      
+      .active {
+      background-color: #f5f8f7;
+      color: white;
+      }
+      
+          .hidden {
+      
+          display: none;
+      
+          }
+          table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      }
+      
+      th, td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid rgb(149, 154, 181);
+      }
+      table thead th { color: rgb(14, 14, 14); font-size:10pt; }
+      th {
+      background-color: #686666;
+      font-weight: bold;
+      }
+      
+      tr {
+      background-color: #f5f5f5;
+      }
+      
+      /* Optional styles to make the table larger */
+      table {
+      font-size: 16px;
+      }
+      
+      th, td {
+      padding: 12px;
+      }
+      .btn-margin-left {
+      margin-left: 2px;
+      }
+      .btn-margin-right {
+      margin-right: 2px;
+      }
+      .box {
+      width: 280px;
+      height: 30px;
+      border: 1px solid #999;
+      font-size: 18px;
+      color: #1c87c9;
+      background-color: #eee;
+      border-radius: 5px;
+      box-shadow: 4px 4px #ccc;
+      }
+      .btn-primary {
+      padding-left:30px;
+      padding-right:30px;
+      margin-left: 2px;
+      margin-right: 2px;
+      }
+      .itemconfiguration
+      {
+      height:440px;
+      width:215px;
+      /* background-color:#CCC; */		
+      overflow-y:auto;
+      float:left;
+      position:relative;
+      margin-left:-5px;
+      }
+      .card-header{
+      background: rgb(90, 95, 90);
+      }
+      .hidden {
+      
+      display: none;
+      
+      }
+      
+      #example {
+        top: 30%;
+        left: 20%;
+        width: 30em;
+        height: 18em;
+        transform: translate(-50%, -50%);
+        border: 1px solid #666;
+        /* background-color: #b9faac; */
+        position: fixed;
+      }
+      /* li {
+        list-style: none;}
+      a{
+        color:white;
+        text-decoration: none;
+      } */
+      .navbar{
+        min-height: 70px;
+        display: flex;
+        justify-content: space-between;
+        align-items: right;
+        padding:0 300px;
+        margin-left: auto; 
+        margin-right: 0;
+      }
+      
+      .nav-menu{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 60px;
+      }
+      
+      .nav-branding{
+        font-size: 4 rem;
+        color: white;
+      }
+      
+      .nav-link{
+        transition: 0.7s ease;
+      }
+      
+      .nav-link:hover{
+        color:dodgerblue;
+      }
+      
+      /* .hamburger{
+        display:flex;
+        cursor:pointer;
+      } */
+      
+      .bar{
+        display: block;
+        width:25px;
+        height:3px;
+        margin:5px auto;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        background-color: white;
+      }
+      
+      /* @media(max-width:768px){
+        .hamburger{
+          display: block;
+        }
+        .hamburger.active .bar:nth-child(2){
+          opacity:0;
+        } */
+      
+          </style>
+    </head>
+    
+    <body>
+
+    <div class="wrapper">
+      <div class="section">
+        <div class="top_navbar">
+          <div class="hamburger">
+           
+            
+            <a href="#">
+              <i class="fas fa-bars"></i>
+            </a>
+          </div>
+          
+          <a href="{% url 'test' %}" style="color:#f8faf9; font-size: 1.5em;padding:12px">Calorie Tracker</a>
+          <div class="anavbar" >
+            <div class="topnav-right"></div>
+            <a class="btn btn-primary" href="/logout">logout</a>
+            
+            
+            <a class="btn btn-primary" href="contact.html">Contact Us</a>
+            
+            
+          </div>
+          
+        </div>
+        <div class="container">
+          <!DOCTYPE html>
+          <html>
+
+          <body>
+            <h2>MealPlan</h2>
+           <table border="3" cellspacing="5" align="center">
+            <!--<caption> MEAL TIME TABLE </caption-->
+              <tr>
+                <td align ="center" height="50"
+                width = "50"><br>
+                <b>Days of the Week</b></br>
+                </td>
+              <td align = "center" height="50"
+              width="100">
+              <b>Monday</b>
+              </td>
+            <td align="center" height="50"
+              width="100">
+              <b>Tuesday</b>
+            </td>
+            <td align="center" height="50"
+             width="100">
+             <b>Wednesday</b>
+            </td>
+            <td align="center" height="50"
+             width="100">
+             <b>Thursday</b>
+            </td>
+          <td align="center" height="50"
+          width="100">
+          <b>Friday</b>
+          </td>
+        <td aligh="center" height="50"
+        width="100">
+        <b>Saturday</b>
+        </td>
+      <td align="center" height="50"
+      width="100">
+      <b>Sunday</b>
+      </td>
+  </tr>
+          <tr>
+            <td align="center" height="30">
+              <b>Breakfast</b></td>
+            <td align="center" height="50">1 cup low- fat plain Yogurt</td>
+            <td align="center" height="50">1/4 cup blueberries</td>
+            <td align="center" height="50">3 Tbsp. chopped walnuts</td>
+            <td align="center" height="50">1 Large Pear</td>
+            <td align="center" height="50">1 serving Muffin-Tin Omelets with Brocolli</td>
+            <td align="center" height="50">3 Tbsp. chooped walnuts</td>
+            <td align="center" height="50">1 cup low-fat plain Greek Yogurt</td>
+                        
+            <tr>
+              <td align="center" height="50">
+                <b>Lunch</b></td>
+                <td align="center" height="50">White Bean & Veggie Salad</td>
+                <td align="center" height="50">1.5 Serving Quiche</td>
+                <td align="center" height="50">Spinach & Strawberries</td>
+                <td align="center" height="50">1 cup blackberrries</td>
+                <td align="center" height="50">1/4 cup unsalted dry-roated almonds</td>
+                <td align="center" height="50">1 serving Spinach & Strawberries Meal-Prep Salad</td>
+                <td align="center" height="50">1 slice whole-wheat bread</td>
+              
+             
+              <tr>
+                <td align="center" height="50">
+                  <b>Dinner</b></td>
+                <td align="center" height="50"
+                  width="100">
+                  <b><br>Garlic Butter-Roasted Salmon with Potatoes</b>
+                </td>
+                <td align="center" height="50"
+                width="100">
+                <b><br>Stuffed Potatoes with Salsa & Beans</b>
+                </td>
+                <td align="center" height="50"
+                width="100">
+                <b><br>2 Cups mixed Greens</b></td>
+                <td align="center" height="50"
+                width="100">
+                <b><br>1 serving Citrus Vinaigrette</b></td>
+                <td align="center" height="50"
+                width="100">
+                <b><br>1 serving 20-Minute Creamy  italian Chicken Skillet</b></td>
+                <td align="center" height="50"
+                width="100">
+                <b><br>1/2 cup cooked brown rice</b></td>
+                <td align="center" height="50"
+                width="100">
+                <b><br>1 serving slow-Cooker Chicken & White Bean Stew</b></td>
+                
+                </td>
+              </tr>
+            </table>
+          </body>
+          </html>
+          
+      
+          
+            
+
+
+        </div>
+      </div>
+      <div class="sidebar">
+        <div class="profile">
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="profile_picture">
+            <h3>{{user}}</h3>
+            <p>User Profile</p>
+        </div>
+        <ul>
+            <li>
+                <a href="{% url 'bmi' %}">
+                    <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
+                    <span class="item">Check BMI</span>
+                </a>
+            </li>
+          
+            <li>
+                <a href="#">
+                    <span class="icon"><i class="fas fa-tasks"></i></span>
+                    <span class="item">Meal Plan</span>
+                </a>
+            </li>
+            
+        </ul>
+      </div>
+    </div>
+
+
+<script>

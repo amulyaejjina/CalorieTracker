@@ -12,7 +12,7 @@ from .models import Food,Consume
 from django.db import connection
 from django.contrib.auth.models import User
 from django import forms
-from .forms import ContactForm
+from .forms import ContactForm,Loginform
 from django.core.mail import send_mail, BadHeaderError
 
 from django.contrib.auth.forms import PasswordResetForm
@@ -101,7 +101,7 @@ def loginpage(request):
     if request.user.is_authenticated:
         return redirect('/test/')
     elif request.method == "POST":
-         form = AuthenticationForm(request, data=request.POST)
+         form = Loginform(request, data=request.POST)
          if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -120,7 +120,7 @@ def loginpage(request):
             for error in list(form.errors.values()):
                      messages.error(request, error)
             return redirect('/login/')
-    form = AuthenticationForm()
+    form = Loginform()
     context ={'form':form} 
     return render(request=request, template_name="myapp/login.html", context={"login_form":form})
     #return render(request, 'myapp/login.html',context)
@@ -153,6 +153,8 @@ def index(request):
 
 def check_bmi(request):
     return render(request,'myapp/bmi.html')
+def MealPlan(request):
+    return render(request, 'myapp/mealplan.html' )
 
 # def mealplan(request):
 #     return render(request,'myapp/meal.html')
@@ -252,7 +254,7 @@ def contact(request):
 			message = "\n".join(body.values())
 
 			try:
-				send_mail(subject, message, 'admin@example.com', ['admin@example.com']) 
+				send_mail(subject, message, 'admin@example.com', ['admin@example.com'],fail_silently=False), 
                                 
 			except BadHeaderError:
 				return HttpResponse('Invalid header found.')
