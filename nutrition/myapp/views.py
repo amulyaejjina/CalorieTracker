@@ -150,6 +150,8 @@ def index(request):
 
 def check_bmi(request):
     return render(request,'myapp/bmi.html')
+def MealPlan(request):
+    return render(request, 'myapp/mealplan.html' )
 
 def delete_consume(request,id):
     consumed_food = Consume.objects.get(id=id)
