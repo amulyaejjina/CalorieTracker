@@ -350,83 +350,18 @@ a{
               
               <a href="{% url 'test' %}" style="color:#f8faf9; font-size: 1.5em;padding:12px">Calorie Tracker</a>
               <div class="navbar" style="float:right">
-                <a class="btn btn-primary" href="/logout
-                ">logout</a>
+                <a class="btn btn-primary" href="/logout">logout</a>
                 
-                <a class="btn btn-primary" href="{% url 'contact' %}">Contact Us</a>
+                <a class="btn btn-primary" href="contact.html">Contact Us</a>
               </div>
               
           </div>
           <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                  <form method="POST">
-                    <br>
-                    <div class="form-group row">
-                    {% csrf_token %}
-                    <label class="col-md-2">
-                      <b>Select Food To Add</b>
-                    </label>
-                    <select  class="col-md-6 fom-control" name="food_consumed" id ="food_consumed">
-                        {% for food in foods %}
-                        <option value="{{food.name}}">{{food.name}}</option>
-                        {% endfor %}
-                    </select>
-                    <button class="btn btn-success" type="submit">Add</button>
-                  </div>
-                </form>
-                </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6" class="itemconfiguratio">
-                <div>
-                  <h5>Todays Consumption :</h5>
-                </div>
-                <div style="height:500px;overflow:auto;">
-                <table id="table" class="table table-striped table-primary" class="itemconfiguratio">
-                  <tr class="bg-primary text-white">
-                    <th>Food item</th>
-                    <th>Carbs</th>
-                    <th>Proteins</th>
-                    <th>Fats</th>
-                    <th>Calories</th>
-                    <th>Remove item</th>
-                  </tr>
-                  {% for c in consumed_food %}
-                  <tr>
-                    <td>{{c.food_consumed.name}}</td>
-                    <td>{{c.food_consumed.carbs}}</td>
-                    <td>{{c.food_consumed.protein}}</td>
-                    <td>{{c.food_consumed.fats}}</td>
-                    <td>{{c.food_consumed.calories}}</td>
-                    <td><a class="btn btn-danger" href="{% url 'delete' c.id %}">X</td>
-                    <!-- <td><button class="btn btn-danger delete-item" data-id="{{c.id}}">X</button></td> -->
-
-                  </tr>
-                  {% endfor %}
-
-                  <tr>
-                    <td id="name"><b>Total</b></td>
-                    <td id="carbs_total"><b></b></td>
-                    <td id="protein_total"><b></b></td>
-                    <td id="fat_total"><b></b></td>
-                    <td id="calories_total"><b></b></td>
-                  </tr>
-                </table>
-                </div>
-              </div>
-              <div class="col-md-5 offset-1">
-                <div class="">
-                  <h5>Today's breakdown :</h5>
-                </div>
-                <div class="card-header text-white">
-                  <h5>Macronutrients breakdown</h5>
-                </div>
-                <div class="col-md-12">
-                  <canvas id="myChart" width="400" height="400"></canvas>
-                </div>
-              </div>
-            </div>
+            <form method="POST">
+                {% csrf_token %}
+                Are you sure you want to delete the item?
+                <input type="submit">
+            </form>
           </div>
           </div>
           <div class="sidebar">
@@ -443,10 +378,10 @@ a{
                     </a>
                 </li>
               
-            	<li>
-                    <a href="{% url 'MealPlan' %}">
+                <li>
+                    <a href="#">
                         <span class="icon"><i class="fas fa-tasks"></i></span>
-                        <span class="item">MealPlan</span>
+                        <span class="item">Meal Plan</span>
                     </a>
                 </li>
                 
@@ -457,7 +392,7 @@ a{
         {% block content %}
 
         {% endblock %} 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
         <footer class="bg-dark text-center text-white">
 
@@ -474,83 +409,6 @@ a{
 	hamburger.addEventListener("click", function(){
 		document.querySelector("body").classList.toggle("active");
 	})
-  
-    //   function hamburger_toggle() {
-    //   var x = document.getElementById("myLinks");
-    //   if (x.style.display === "block") {
-    //     x.style.display = "none";
-    //   } else {
-    //     x.style.display = "block";
-    //   }
-    // }
-        function toggleTable() {
-
-        document.getElementById("myTable").style.display="none";
-        // .classList.toggle("hidden");
-
-        }
-        function myfunction()
-        {
-            if (document.getElementById("displaytable").style.display == "none")
-                document.getElementById("displaytable").style.display="block";
-            else
-                document.getElementById("displaytable").style.display="none";
-        }
-        var table = document.getElementById("table");
-        var carbs=0,proteins=0,fats=0,calories=0;
-  
-        for(var i=1;i<table.rows.length-1;i++){
-          console.log(table.rows[i].cells[1].innerHTML);
-          carbs += parseFloat(table.rows[i].cells[1].innerHTML);
-          carbs = Math.round(carbs);
-          proteins += parseFloat(table.rows[i].cells[2].innerHTML);
-          proteins = Math.round(proteins);
-          fats += parseFloat(table.rows[i].cells[3].innerHTML);
-          fats = Math.round(fats);
-          calories += parseFloat(table.rows[i].cells[4].innerHTML);
-          calories = Math.round(calories);
-        }
-        console.log(carbs);
-        document.getElementById("carbs_total").innerHTML = carbs;
-        document.getElementById("protein_total").innerHTML = proteins;
-        document.getElementById("fat_total").innerHTML = fats;
-        document.getElementById("calories_total").innerHTML = calories;
-
-  var total = carbs+proteins+fats;
-  var carbsP = Math.round((carbs/total)*100);
-  var proteinP = Math.ceil((proteins/total)*100);
-  var fatsP = Math.ceil((fats/total)*100);
-
- 
-    var ctx = document.getElementById('myChart').getContext('2d');
-
-  var myChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Carbs '+carbsP+'%', 'Protein '+proteinP+'%', 'Fats '+fatsP+'%'],
-      datasets: [{
-        label: '# of Votes',
-        data: [carbsP,proteinP,fatsP],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(255, 206, 86, 0.6)',
-          
-        ],
-        borderColor: [
-            'rgba(255, 99, 132, 0.6)',
-            'rgba(54, 162, 235, 0.6)',
-            'rgba(255, 206, 86, 0.6)', 
-        ],
-        borderWidth: 1
-      }]
-    },
-  })
-  // document.getElementById("delete-btn").addEventListener("click", function(){
-  //       if (confirm("Are you sure you want to delete this record?")) {
-  //           var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-  //       }
-  //   });
     </script>
 </html>
 
