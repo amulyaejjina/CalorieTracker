@@ -38,6 +38,8 @@ def home(request):
     if request.user.is_authenticated:
         return redirect('/test/')
     elif request.method =="GET":
+        data=''
+        columns=''
         with connection.cursor() as cursor:
             food_searched = request.GET.get('food_searched')
             
@@ -47,14 +49,15 @@ def home(request):
                 food_searched = food_searched.lower()
             # food_searched = 'Oatmeal'
             # food_consumed = request.GET['food_consumed']
-            print("-----------")
-            print(food_searched)
-            query = "SELECT name,carbs,protein,fats,calories FROM myapp_food WHERE LOWER(name)="+"'"+food_searched+"'"
-            cursor.execute(query)
-            columns = [col[0] for col in cursor.description]
-            print(columns)
-            data = cursor.fetchall()
-            print(data)
+
+                # query = "SELECT name,carbs,protein,fats,calories FROM myapp_food WHERE LOWER(name) LIKE '%{}'".format(food_searched.lower())
+                #query = "SELECT name, carbs, protein, fats, calories FROM myapp_food WHERE LOWER(name) LIKE '"+food_searched.lower()+"%'"
+                #query = "SELECT name,carbs,protein,fats,calories FROM myapp_food WHERE LOWER(name) LIKE '"+food_searched.lower()+"%'"
+
+                query = "SELECT name,carbs,protein,fats,calories FROM myapp_food WHERE LOWER(name)="+"'"+food_searched+"'"
+                cursor.execute(query)
+                columns = [col[0] for col in cursor.description]
+                data = cursor.fetchall()
         return render(request, 'myapp/home.html', {'columns': columns, 'data': data})
  
     elif request.method =="POST":
@@ -151,18 +154,22 @@ def index(request):
 def check_bmi(request):
     return render(request,'myapp/bmi.html')
 
+# def mealplan(request):
+#     return render(request,'myapp/meal.html')
+
 def delete_consume(request,id):
     consumed_food = Consume.objects.get(id=id)
+    user = request.user
     if request.method =='POST':
         consumed_food.delete()
         return redirect('/test/')
-    return render(request,'myapp/delete.html')
+    return render(request,'myapp/delete2.html',{'username' : user.username})
 
 def index(request):
     return render(request,'myapp/signup.html')
 
-def contact(request):
-    return render(request,'myapp/contact.html')
+# def contact(request):
+#     return render(request,'myapp/contact.html')
 
 def test(request):
     if request.method =="POST":
