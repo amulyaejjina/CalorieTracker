@@ -8,7 +8,7 @@ urlpatterns = [
     path('login/', views.loginpage, name='login'),
     path('login/login/', views.loginpage, name='login'),
     path('logout/', views.logout_page, name='logout_page'),
-    path('MealPlan/', views.MealPlan, name="MealPlan"),
+    # path('MealPlan/', views.mealplan, name="MealPlan"),
 
    
     path('register/', views.register ),
@@ -21,7 +21,7 @@ urlpatterns = [
     path('login/test/', views.test,name="test" ),
     path('delete/<int:id>/', views.delete_consume,name="delete"),
     path('bmi/', views.check_bmi,name="bmi" ),
-    # path('mealplan/', views.mealplan,name="mealplan" ),
+    path('mealplan/', views.mealplan,name="mealplan" ),
     path("password_reset/", views.password_reset_request,name="password_reset"),
     path("login/password_reset/", views.password_reset_request,name="password_reset"),
 

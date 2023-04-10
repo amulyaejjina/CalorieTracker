@@ -265,7 +265,19 @@ background: rgb(90, 95, 90);
 display: none;
 
 }
+.btn-logout {
+  margin-left: auto;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
 
+.logo {
+  font-size: 24px;
+}
 #example {
   top: 30%;
   left: 20%;
@@ -285,11 +297,14 @@ a{
 .navbar{
   min-height: 70px;
   display: flex;
-  justify-content: space-between;
-  align-items: right;
-  padding:0 300px;
+  justify-content: flex-end;
+
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: right; */
+  /* padding:0 300px; */
   margin-left: auto; 
-  margin-right: 0;
+  /* margin-right: 0; */
 }
 
 .nav-menu{
@@ -347,9 +362,9 @@ a{
                   <i class="fas fa-bars"></i>
                 </a>
               </div>
-              
+
               <a href="{% url 'test' %}" style="color:#f8faf9; font-size: 1.5em;padding:12px">Calorie Tracker</a>
-              <div class="navbar" style="float:right">
+              <div class="navbar">
                 <a class="btn btn-primary" href="/logout
                 ">logout</a>
                 
@@ -444,7 +459,7 @@ a{
                 </li>
               
             	<li>
-                    <a href="{% url 'MealPlan' %}">
+                    <a href="{% url 'mealplan' %}">
                         <span class="icon"><i class="fas fa-tasks"></i></span>
                         <span class="item">MealPlan</span>
                     </a>
@@ -502,7 +517,7 @@ a{
         for(var i=1;i<table.rows.length-1;i++){
           console.log(table.rows[i].cells[1].innerHTML);
           carbs += parseFloat(table.rows[i].cells[1].innerHTML);
-          carbs = Math.round(carbs);
+          carbs = Math.round(carbs,2);
           proteins += parseFloat(table.rows[i].cells[2].innerHTML);
           proteins = Math.round(proteins);
           fats += parseFloat(table.rows[i].cells[3].innerHTML);
@@ -510,6 +525,7 @@ a{
           calories += parseFloat(table.rows[i].cells[4].innerHTML);
           calories = Math.round(calories);
         }
+        // carbs = carbs.toFixed(2);
         console.log(carbs);
         document.getElementById("carbs_total").innerHTML = carbs;
         document.getElementById("protein_total").innerHTML = proteins;

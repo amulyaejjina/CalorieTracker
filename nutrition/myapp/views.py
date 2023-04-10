@@ -58,6 +58,9 @@ def home(request):
                 cursor.execute(query)
                 columns = [col[0] for col in cursor.description]
                 data = cursor.fetchall()
+        if food_searched == '':
+            columns=''
+            data=''
         return render(request, 'myapp/home.html', {'columns': columns, 'data': data})
  
     elif request.method =="POST":
@@ -153,11 +156,11 @@ def index(request):
 
 def check_bmi(request):
     return render(request,'myapp/bmi.html')
-def MealPlan(request):
-    return render(request, 'myapp/mealplan.html' )
+# def MealPlan(request):
+#     return render(request, 'myapp/mealplan.html' )
 
-# def mealplan(request):
-#     return render(request,'myapp/meal.html')
+def mealplan(request):
+    return render(request,'myapp/meal.html')
 
 def delete_consume(request,id):
     consumed_food = Consume.objects.get(id=id)

@@ -469,14 +469,17 @@ background:url(img/new_site.png) 0 -310px;
         text-decoration: none;
       } */
       .navbar{
-        min-height: 70px;
-        display: flex;
-        justify-content: space-between;
-        align-items: right;
-        padding:0 300px;
-        margin-left: auto; 
-        margin-right: 0;
-      }
+  min-height: 70px;
+  display: flex;
+  justify-content: flex-end;
+
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: right; */
+  /* padding:0 300px; */
+  margin-left: auto; 
+  /* margin-right: 0; */
+}
       
       .nav-menu{
         display: flex;
@@ -569,7 +572,7 @@ background:url(img/new_site.png) 0 -310px;
           <div style="max-width:700px; word-wrap:break-word;margin-left: 7cm;">
           <p style="display:inline-block;" class="result-statement"></p>
         </div>
-        <div style="max-width:700px; word-wrap:break-word;margin-left: 5cm;">Disclaimer: Please note that any BMI calculator provided on this platform is for 
+        <div style="max-width:850px; word-wrap:break-word;margin-left: 5cm;"><b>Disclaimer:</b> Please note that any BMI calculator provided on this platform is for 
           informational purposes only and should not be used as a substitute for professional medical advice, diagnosis, or treatment. 
           The results of the BMI calculator may not be accurate for all individuals, as it does not take into account factors such as 
           muscle mass, bone density, and body composition.</div>
@@ -589,7 +592,7 @@ background:url(img/new_site.png) 0 -310px;
             </li>
           
             <li>
-                <a href="#">
+                <a href="{% url 'mealplan' %}">
                     <span class="icon"><i class="fas fa-tasks"></i></span>
                     <span class="item">Meal Plan</span>
                 </a>
