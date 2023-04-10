@@ -237,29 +237,29 @@ def password_reset_request(request):
 	password_reset_form = PasswordResetForm()
 	return render(request=request, template_name="myapp/password_reset.html", context={"password_reset_form":password_reset_form})
 
-
-
 def contact(request):
-	if request.method == 'POST':
-		form = ContactForm(request.POST)
-		if form.is_valid():
-			subject = "Website Inquiry"
-            # 'subject' : form.cleaned_data["subject"] 
-			body = {
+     if request.method=='POST':
+          form =ContactForm(request.POST)
+
+          if form.is_valid():
+               subject = "Website Inquiry"
+               body = {
 			'first_name': form.cleaned_data['first_name'], 
 			'last_name': form.cleaned_data['last_name'], 
 			'email': form.cleaned_data['email_address'], 
 			'message':form.cleaned_data['message'], 
 			}
-			message = "\n".join(body.values())
+               message = "\n".join(body.values())
+               try:
+                send_mail(subject,message,'admin@example.com', ['admin@example.com'],fail_silently=False),
+                messages.success(request, 'Thank you,Message submited successfully!')
+               except BadHeaderError:
+                    return HttpResponse('Invalid header found.')
+                    for error in list(form.errors.values()):
+                         messages.error(request, error)
+               return redirect('/contact')
+     form =ContactForm()
+     return render(request, "myapp/contact.html", {'form':form})
 
-			try:
-				send_mail(subject, message, 'admin@example.com', ['admin@example.com'],fail_silently=False), 
-                                
-			except BadHeaderError:
-				return HttpResponse('Invalid header found.')
-                     
-			return redirect('/contact')
-      
-	form = ContactForm()
-	return render(request, "myapp/contact.html", {'form':form})
+    
+
