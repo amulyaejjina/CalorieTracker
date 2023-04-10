@@ -139,7 +139,7 @@ margin-right: 2px;
             </form>
         
            <br>
-            <table id="myTable" class="hidden">
+            <table id="myTable">
                 <thead>
                     <tr>
                     {% for column in columns %}
@@ -237,12 +237,12 @@ margin-right: 2px;
 
     </body>
     <script>
-        // function toggleTable() {
+      // function toggleTable() {
 
-        // document.getElementById("myTable").style.display="none";
-        // // .classList.toggle("hidden");
+      //   document.getElementById("myTable").style.display="none";
+      //   // .classList.toggle("hidden");
 
-        // }
+      //   }
         function myfunction()
         {
             if (document.getElementById("displaytable").style.display == "none")
@@ -253,11 +253,11 @@ margin-right: 2px;
         var table = document.getElementById("table");
         var carbs=0,proteins=0,fats=0,calories=0;
 
-//         function toggleTable() {
+        function toggleTable() {
 
-// document.getElementById("myTable").classList.toggle("hidden");
+document.getElementById("myTable").classList.toggle("hidden");
 
-//}
+}
   
         // for(var i=1;i<table.rows.length-1;i++){
         //   console.log(table.rows[i].cells[1].innerHTML);

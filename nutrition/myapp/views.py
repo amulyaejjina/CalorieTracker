@@ -50,11 +50,11 @@ def home(request):
             # food_searched = 'Oatmeal'
             # food_consumed = request.GET['food_consumed']
 
-                # query = "SELECT name,carbs,protein,fats,calories FROM myapp_food WHERE LOWER(name) LIKE '%{}'".format(food_searched.lower())
-                #query = "SELECT name, carbs, protein, fats, calories FROM myapp_food WHERE LOWER(name) LIKE '"+food_searched.lower()+"%'"
+                #query = "SELECT name,carbs,protein,fats,calories FROM myapp_food WHERE LOWER(name) LIKE '%{}'".format(food_searched.lower())
+                query = "SELECT name, carbs, protein, fats, calories FROM myapp_food WHERE LOWER(name) LIKE '"+food_searched.lower()+"%'"
                 #query = "SELECT name,carbs,protein,fats,calories FROM myapp_food WHERE LOWER(name) LIKE '"+food_searched.lower()+"%'"
 
-                query = "SELECT name,carbs,protein,fats,calories FROM myapp_food WHERE LOWER(name)="+"'"+food_searched+"'"
+                # query = "SELECT name,carbs,protein,fats,calories FROM myapp_food WHERE LOWER(name)="+"'"+food_searched+"'"
                 cursor.execute(query)
                 columns = [col[0] for col in cursor.description]
                 data = cursor.fetchall()
