@@ -11,6 +11,7 @@ class createuserForm(UserCreationForm):
     email =forms.EmailField(required=True,max_length=40)
     first_name =forms.CharField(required=True,max_length=40)
     last_name = forms.CharField(required=True,max_length=40)
+    
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
@@ -31,4 +32,5 @@ class ContactForm(forms.Form):
 
 class Loginform(AuthenticationForm):
     username =forms.CharField(required=True,max_length=40)
-    password = forms.CharField(required=True,max_length=40)
+    #password = forms.CharField(required=True,max_length=40)
+

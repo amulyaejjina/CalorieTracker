@@ -100,7 +100,7 @@ def register(request):
     return render (request=request, template_name="myapp/register.html", context={"register_form":form})
 
 def loginpage(request):
-    context ={}
+   # context ={}
     if request.user.is_authenticated:
         return redirect('/test/')
     elif request.method == "POST":
@@ -108,8 +108,6 @@ def loginpage(request):
          if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            if (len(username) == 0) or (len(password) == 0):
-                return redirect('/login/')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
