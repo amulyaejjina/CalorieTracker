@@ -83,7 +83,7 @@ margin-right: 2px;
     <body>
 
         <nav class="navbar navbar-dark bg-dark">
-            <a href="#" class="navbar-brand">Calorie Tracker</a>
+            <a href="{% url 'test' %}" class="navbar-brand">Calorie Tracker</a>
             {% if user.is_authenticated %}
             <div class="navbar">
                 <a class="btn btn-primary" href="/logout">logout</a>

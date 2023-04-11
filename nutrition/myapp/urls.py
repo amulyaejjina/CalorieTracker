@@ -21,7 +21,10 @@ urlpatterns = [
     path('login/test/', views.test,name="test" ),
     path('delete/<int:id>/', views.delete_consume,name="delete"),
     path('bmi/', views.check_bmi,name="bmi" ),
+    path('bmi/contact.html/', views.contact,name="contact" ),
     path('mealplan/', views.mealplan,name="mealplan" ),
+    path('mealplan/contact.html/', views.contact,name="contact" ),
+    
     path("password_reset/", views.password_reset_request,name="password_reset"),
     path("login/password_reset/", views.password_reset_request,name="password_reset"),
 
