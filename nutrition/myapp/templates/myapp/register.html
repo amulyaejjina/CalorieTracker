@@ -15,6 +15,23 @@
 		<fieldset class="form-group">
 			<legend class="border-bottom mb-4">Join Today</legend>
 		{{ form|crispy }}
+		<label for="illness_question">Do you have an illness?</label>
+		<select id="illness_question" onchange="illness_question()">
+			<option value="">Diabetes</option>
+			<option value="">Pancreatis</option>
+			<option value="no">Lactose intolerance</option>
+			<option value="no">Peptic Ulcers</option>
+		
+			</select>
+		<label for="illness_question">Do you want a meal Plan?</label>
+		<select id="illness_question" name="illness_question">
+			<option value="">Select One</option>
+			<option value="yes">Yes</option>
+			<option value="no">No</option>
+		</select>
+	</form>
+	</body>
+			
 	</fieldset>
 	<div class="form-group"></div>
 		                    
