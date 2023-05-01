@@ -363,7 +363,9 @@ a{
             <form method="POST">
                 {% csrf_token %}
                 Are you sure you want to delete the item?
-                <input type="submit">
+                <!-- <input type="submit"> -->
+                <button class="btn btn-primary" type="submit">submit</button>
+                <a class="btn btn-primary" href="/test">cancel</a>
             </form>
           </div>
           </div>
